@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Sri Sai Natural Foods | Wood-Pressed Oils, Ghee, Pulses & More</title>
+  <meta name="description" content="Browse our full range of wood-pressed oils, pure ghee, fresh pulses and dals, spices and raw foods. Natural groceries in Hafeezpet, Hyderabad.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>🌿</text></svg>">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">🌿</div>
+        <div>Sri Sai Natural Foods<span>Hafeezpet · Hyderabad</span></div>
+      </a>
+      <div class="nav__links">
+        <a href="index.html" class="nav__link">Home</a>
+        <a href="products.html" class="nav__link">Products</a>
+        <a href="about.html" class="nav__link">About</a>
+        <a href="contact.html" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__actions">
+        <a href="https://wa.me/917799549977" target="_blank" rel="noopener" class="btn btn-amber btn-sm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
+          Order Now
+        </a>
+        <a href="cart.html" class="nav__cart-btn" id="cart-btn" aria-label="Shopping cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="nav__cart-badge" id="cart-badge"></span>
+        </a>
+        <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="nav__mobile" id="nav-mobile">
+  <a href="index.html" class="nav__mobile-link">Home</a>
+  <a href="products.html" class="nav__mobile-link">Products</a>
+  <a href="about.html" class="nav__mobile-link">About</a>
+  <a href="contact.html" class="nav__mobile-link">Contact</a>
+  <a href="cart.html" class="nav__mobile-link">Cart</a>
+  <a href="https://wa.me/917799549977" class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">Order on WhatsApp</a>
+</div>
+
+<!-- PAGE HERO -->
+<header class="products-page-hero" role="banner">
+  <div class="container">
+    <p class="section-eyebrow" style="color:var(--amber-400)">Natural Groceries</p>
+    <h1>All Products</h1>
+    <p>Wood-pressed oils, pure ghee, fresh dals, spices and raw foods — all natural, all fresh.</p>
+  </div>
+</header>
+
+<!-- PRODUCTS SECTION -->
+<main class="section section--cream" aria-label="Products catalogue">
+  <div class="container">
+    <div class="products-layout">
+
+      <!-- FILTERS SIDEBAR -->
+      <aside class="filters-sidebar" aria-label="Filter products">
+        <h3>Filter</h3>
+        <div class="filter-group">
+          <h4>Category</h4>
+          <button class="filter-btn active" data-category="all" aria-pressed="true">
+            🌿 All Products <span class="filter-count" id="count-all"></span>
+          </button>
+          <button class="filter-btn" data-category="oils" aria-pressed="false">
+            🫙 Oils <span class="filter-count" id="count-oils"></span>
+          </button>
+          <button class="filter-btn" data-category="ghee" aria-pressed="false">
+            ✨ Ghee <span class="filter-count" id="count-ghee"></span>
+          </button>
+          <button class="filter-btn" data-category="pulses" aria-pressed="false">
+            🫘 Pulses & Dals <span class="filter-count" id="count-pulses"></span>
+          </button>
+          <button class="filter-btn" data-category="spices" aria-pressed="false">
+            🌶️ Spices <span class="filter-count" id="count-spices"></span>
+          </button>
+          <button class="filter-btn" data-category="raw" aria-pressed="false">
+            🍯 Raw Foods <span class="filter-count" id="count-raw"></span>
+          </button>
+        </div>
+
+        <div style="border-top:1px solid var(--brown-100);padding-top:1.5rem;margin-top:0.5rem">
+          <h4>Get in touch</h4>
+          <p style="font-size:0.82rem;color:var(--brown-400);line-height:1.65;margin-bottom:1rem">Don't see what you need? WhatsApp us and we'll check availability.</p>
+          <a href="https://wa.me/917799549977" class="btn btn-whatsapp btn-sm" style="width:100%;justify-content:center" target="_blank" rel="noopener">💬 WhatsApp Us</a>
+        </div>
+      </aside>
+
+      <!-- PRODUCTS MAIN -->
+      <div class="products-main">
+        <div class="products-toolbar">
+          <label class="search-bar" for="search-input" aria-label="Search products">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" id="search-input" placeholder="Search products…" autocomplete="off">
+          </label>
+          <select class="sort-select" id="sort-select" aria-label="Sort products">
+            <option value="default">Sort: Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name">Name: A–Z</option>
+          </select>
+          <p class="products-count" id="products-count" aria-live="polite"></p>
+        </div>
+
+        <div class="products-grid-full" id="products-grid" aria-label="Products grid">
+          <!-- JS rendered -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- CTA -->
+<section class="cta-banner" style="padding:4rem 0" aria-label="WhatsApp order CTA">
+  <div class="container" style="text-align:center">
+    <h2 style="color:var(--white);margin-bottom:1rem">Prefer to order by WhatsApp?</h2>
+    <p style="color:rgba(255,255,255,.7);margin-bottom:2rem;max-width:480px;margin-inline:auto">Message us your list and we'll confirm availability and pricing right away.</p>
+    <a href="https://wa.me/917799549977" class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener" id="products-wa-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
+      Order on WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <div class="footer__logo-icon">🌿</div>
+          <div class="footer__logo-name">Sri Sai Natural Foods</div>
+        </div>
+        <p class="footer__tagline">A neighbourhood general store in Hafeezpet for wood-pressed oils, pulses, ghee and natural groceries.</p>
+        <div class="footer__rating">
+          <span class="footer__rating-stars">★★★★★</span>
+          <span>4.9 · 47 Google reviews</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer__heading">Explore</div>
+        <nav class="footer__links">
+          <a href="index.html" class="footer__link">Home</a>
+          <a href="products.html" class="footer__link">Products</a>
+          <a href="about.html" class="footer__link">About</a>
+          <a href="contact.html" class="footer__link">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <div class="footer__heading">Categories</div>
+        <nav class="footer__links">
+          <a href="#" class="footer__link" onclick="document.querySelector('[data-category=oils]').click();return false">Wood-Pressed Oils</a>
+          <a href="#" class="footer__link" onclick="document.querySelector('[data-category=ghee]').click();return false">Pure Ghee</a>
+          <a href="#" class="footer__link" onclick="document.querySelector('[data-category=pulses]').click();return false">Pulses & Dals</a>
+          <a href="#" class="footer__link" onclick="document.querySelector('[data-category=spices]').click();return false">Spices</a>
+          <a href="#" class="footer__link" onclick="document.querySelector('[data-category=raw]').click();return false">Raw Foods</a>
+        </nav>
+      </div>
+      <div>
+        <div class="footer__heading">Visit Us</div>
+        <p class="footer__address">Plot number: 718, kaman Main road, beside Gopal Nagar, Gopal Nagar, Shilpa Avenue Colony, Hafeezpet, Hyderabad, Telangana 500085</p>
+        <p style="color:rgba(255,255,255,.5);font-size:0.82rem;margin-bottom:1rem">Open daily · Closes 9:30 PM</p>
+        <div class="footer__contact-links">
+          <a href="tel:+917799549977" class="footer__contact-link"><span>📞</span> 077995 49977</a>
+          <a href="https://wa.me/917799549977" class="footer__contact-link" target="_blank" rel="noopener"><span>💬</span> WhatsApp us</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Sri Sai Natural Foods, Hafeezpet, Hyderabad.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/cart.js"></script>
+<script src="js/products.js"></script>
+<script src="js/main.js"></script>
+<script>
+  // Fill category counts
+  document.addEventListener('DOMContentLoaded', () => {
+    const counts = getCategoryCounts();
+    Object.entries(counts).forEach(([cat, count]) => {
+      const el = document.getElementById('count-' + cat);
+      if (el) el.textContent = count;
+    });
+  });
+</script>
+</body>
+</html>
