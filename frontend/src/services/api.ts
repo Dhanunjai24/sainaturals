@@ -1,6 +1,6 @@
 import { User, Product, Category, CartItem, WishlistItem, Address, Coupon, Order, Review, Banner, AdminStats } from '../types';
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/api` : '/api';
 
 function getHeaders(): HeadersInit {
   const token = localStorage.getItem('sai_token');
