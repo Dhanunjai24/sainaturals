@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sri Sai Natural Foods — Client Pitch Deck</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0B0F19;
+      color: #F8FAFC;
+    }
+    .slide {
+      display: none;
+      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .slide.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.995); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @media print {
+      body { background-color: #FFFFFF; color: #0F172A; }
+      .no-print { display: none !important; }
+      .slide { display: flex !important; page-break-after: always; height: 100vh; }
+      .print-card { background: #F8FAFC !important; border: 1px solid #E2E8F0 !important; color: #0F172A !important; }
+    }
+  </style>
+</head>
+<body class="h-screen w-screen overflow-hidden select-none flex flex-col justify-between">
+
+  <!-- TOP GLOBAL NAV BAR -->
+  <header class="no-print h-14 border-b border-slate-800/80 px-6 flex items-center justify-between bg-slate-950/60 backdrop-blur-md z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-black text-sm">
+        🌿
+      </div>
+      <div>
+        <span class="font-bold text-xs uppercase tracking-widest text-slate-400">Client Presentation Deck</span>
+        <h1 class="font-black text-sm text-slate-100 -mt-1">Sri Sai Natural Foods E-Commerce Platform</h1>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 text-xs">
+      <span id="slideIndicator" class="font-mono font-bold text-emerald-400 px-3 py-1 bg-emerald-950/50 border border-emerald-800/50 rounded-full">
+        Slide 1 of 10
+      </span>
+      <button onclick="toggleFullscreen()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-all">
+        ⛶ Fullscreen
+      </button>
+      <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all shadow-sm">
+        🖨️ Export PDF
+      </button>
+    </div>
+  </header>
+
+  <!-- SLIDES WRAPPER -->
+  <main class="flex-1 overflow-hidden relative p-4 sm:p-8 flex items-center justify-center">
+
+    <!-- SLIDE 1: COVER -->
+    <section class="slide active w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="1">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-black uppercase tracking-wider w-fit">
+        ✨ Commercial Solution Pitch Deck
+      </div>
+      <div class="space-y-3 max-w-4xl">
+        <h2 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight">
+          Next-Gen Quick-Commerce & <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300">Grocery Store Platform</span>
+        </h2>
+        <p class="text-base sm:text-lg text-slate-400 font-medium leading-relaxed">
+          Own your complete direct-to-consumer digital infrastructure. Zero marketplace commissions, full customer data ownership, and instant Android mobile app deployment.
+        </p>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 print-card">
+          <p class="text-2xl font-black text-emerald-400">25 Pages</p>
+          <p class="text-xs text-slate-400 mt-1">15 Storefront + 10 Admin ERP</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 print-card">
+          <p class="text-2xl font-black text-amber-400">0% Cuts</p>
+          <p class="text-xs text-slate-400 mt-1">Keep 100% of order revenue</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 print-card">
+          <p class="text-2xl font-black text-emerald-400">Mobile Ready</p>
+          <p class="text-xs text-slate-400 mt-1">Capacitor Android APK engine</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 print-card">
+          <p class="text-2xl font-black text-teal-400">Dual-Engine</p>
+          <p class="text-xs text-slate-400 mt-1">PostgreSQL + Local Fallback</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: THE PROBLEM VS THE SOLUTION -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="2">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Market Opportunity</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">Why Own Your Platform Instead of Renting?</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Problem -->
+        <div class="p-6 rounded-3xl bg-rose-950/20 border border-rose-900/40 space-y-4 print-card">
+          <div class="flex items-center gap-2 text-rose-400 font-black text-sm uppercase">
+            <span>❌ The Aggregator Trap (Swiggy / Blinkit / Zepto)</span>
+          </div>
+          <ul class="space-y-3 text-xs sm:text-sm text-slate-300">
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold">✕</span>
+              <span><strong>15% to 30% Commissions:</strong> Aggregators consume nearly your entire net profit margin on every grocery order.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold">✕</span>
+              <span><strong>Zero Customer Ownership:</strong> They mask customer phone numbers and emails. You cannot send WhatsApp/SMS promotions.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold">✕</span>
+              <span><strong>They Promote Competitors:</strong> When customers search your brand, apps display cheaper rival products right next to yours.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Solution -->
+        <div class="p-6 rounded-3xl bg-emerald-950/20 border border-emerald-800/40 space-y-4 print-card">
+          <div class="flex items-center gap-2 text-emerald-400 font-black text-sm uppercase">
+            <span>✅ The Turnkey Solution (Sri Sai Natural Foods Platform)</span>
+          </div>
+          <ul class="space-y-3 text-xs sm:text-sm text-slate-300">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✔</span>
+              <span><strong>0% Commission Fees:</strong> Every rupee paid via UPI or COD goes directly into your bank account.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✔</span>
+              <span><strong>100% Customer CRM:</strong> Own your direct phone directory of loyal Hyderabad / Telangana customers for repeat orders.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✔</span>
+              <span><strong>Permanent Brand Equity:</strong> Build your own digital asset that increases the real valuation of your grocery business.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: COMPLETE PLATFORM ARCHITECTURE -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="3">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Architecture & Tech Stack</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">Full-Stack Enterprise Technology Blueprint</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-2 print-card">
+          <span class="text-2xl">🛍️</span>
+          <h3 class="font-extrabold text-sm text-emerald-400">Customer Storefront</h3>
+          <p class="text-[11px] font-bold text-amber-400">React 18 • TypeScript • Tailwind</p>
+          <ul class="text-[11px] text-slate-300 space-y-1 pt-1">
+            <li>• 15 High-conversion pages</li>
+            <li>• Mobile audited (320px-1920px)</li>
+            <li>• Bilingual Telugu/English tags</li>
+            <li>• GPS Auto-Fill & Express checkout</li>
+          </ul>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-2 print-card">
+          <span class="text-2xl">📊</span>
+          <h3 class="font-extrabold text-sm text-emerald-400">Admin ERP Suite</h3>
+          <p class="text-[11px] font-bold text-amber-400">Operational Back-Office</p>
+          <ul class="text-[11px] text-slate-300 space-y-1 pt-1">
+            <li>• 10 Business management tools</li>
+            <li>• Live order status pipeline</li>
+            <li>• Inventory change audit log</li>
+            <li>• Coupon discounts engine</li>
+          </ul>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-2 print-card">
+          <span class="text-2xl">⚡</span>
+          <h3 class="font-extrabold text-sm text-emerald-400">Backend Engine</h3>
+          <p class="text-[11px] font-bold text-amber-400">Node.js • Express REST</p>
+          <ul class="text-[11px] text-slate-300 space-y-1 pt-1">
+            <li>• Modular REST API</li>
+            <li>• Bcrypt + JWT authentication</li>
+            <li>• ACID stock deduction logic</li>
+            <li>• Instant dynamic UPI QR</li>
+          </ul>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-2 print-card">
+          <span class="text-2xl">🐘</span>
+          <h3 class="font-extrabold text-sm text-emerald-400">Dual Database</h3>
+          <p class="text-[11px] font-bold text-amber-400">PostgreSQL + Local Fallback</p>
+          <ul class="text-[11px] text-slate-300 space-y-1 pt-1">
+            <li>• 13 Normalized SQL tables</li>
+            <li>• Embedded zero-config JSON mode</li>
+            <li>• One-click cloud deploy</li>
+            <li>• Zero recurring license fee</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: STOREFRONT DETAIL (15 PAGES) -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="4">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Customer Experience</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">15 Completed Customer Store Pages</h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 print-card">
+          <p class="font-bold text-slate-100">1. Home Page</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Hero carousel, trust badges, category shortcuts, reviews</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 print-card">
+          <p class="font-bold text-slate-100">2. Catalog & Filters</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Instant search bar, category chips, price and rating sort</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 print-card">
+          <p class="font-bold text-slate-100">3. Product Details</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Telugu names, discount calculator, units, reviews form</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 print-card">
+          <p class="font-bold text-slate-100">4. Shopping Cart</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Quantity steppers, subtotal & free delivery threshold</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 print-card">
+          <p class="font-bold text-slate-100">5. Express Checkout</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">GPS Auto-Fill, address book, slot picker, dynamic UPI QR</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 print-card">
+          <p class="font-bold text-slate-100">6. Order Tracking</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">5-stage visual progress stepper, cancel with auto-refund</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 print-card">
+          <p class="font-bold text-slate-100">7. Customer Profile</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Order history log, multiple saved shipping addresses</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 print-card">
+          <p class="font-bold text-slate-100">8. Wishlist & Offers</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Saved items with 1-click cart transfer, copy promo codes</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: ADMIN ERP SUITE (10 MODULES) -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="5">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Store Administration</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">10 Enterprise Store Management Modules</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <p class="font-extrabold text-amber-400 text-sm">1. KPI Analytics Dashboard</p>
+          <p class="text-slate-300">Real-time gross revenue, order volume counter, active inventory, and low-stock warnings.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <p class="font-extrabold text-amber-400 text-sm">2. Product Catalog Manager</p>
+          <p class="text-slate-300">Add & edit items with MRP, discounted prices, Telugu titles, packaging units, and stock quantities.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <p class="font-extrabold text-amber-400 text-sm">3. Order Fulfillment Pipeline</p>
+          <p class="text-slate-300">Live order status transitions: Pending ➔ Confirmed ➔ Packed ➔ Out for Delivery ➔ Delivered.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <p class="font-extrabold text-amber-400 text-sm">4. Inventory & Stock Audit</p>
+          <p class="text-slate-300">Manual stock steppers (+/-) with automated audit trail recording reasons and timestamps.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <p class="font-extrabold text-amber-400 text-sm">5. Dynamic Coupon Creator</p>
+          <p class="text-slate-300">Configure flat or % discounts, usage limits, minimum order spend, and auto-expiration dates.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <p class="font-extrabold text-amber-400 text-sm">6. Customer CRM & Reports</p>
+          <p class="text-slate-300">Track customer lifetime order frequency and total spend; view sales and revenue reports.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: MOBILE APP READY (CAPACITOR ANDROID) -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="6">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Mobile Advantage</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">Web + Android Mobile App in One Unified Solution</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 print-card space-y-3">
+          <span class="text-3xl">📱</span>
+          <h3 class="font-extrabold text-base text-emerald-400">Save ₹75,000+ on Separate App Builds</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Most businesses are forced to hire a separate mobile developer to build an Android app. This platform comes pre-configured with <strong>Capacitor</strong>, compiling the high-performance React web application directly into an Android APK with one command.
+          </p>
+        </div>
+        <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 print-card space-y-3">
+          <span class="text-3xl">⚡</span>
+          <h3 class="font-extrabold text-base text-amber-400">Single Source of Truth (Instant Sync)</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Whenever your staff adds a new product, changes a price, or posts a discount banner from the Admin ERP, it reflects simultaneously across both the website and your customers' Android mobile phones without requiring manual app store updates.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: REPLACEMENT COST & VALUATION -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="7">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Market Valuation</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">What Does It Cost to Duplicate From Scratch?</h2>
+      </div>
+
+      <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 overflow-hidden print-card">
+        <table class="w-full text-left text-xs">
+          <thead class="border-b border-slate-800 text-slate-400 font-bold uppercase text-[10px]">
+            <tr>
+              <th class="pb-3">Component Scope</th>
+              <th class="pb-3">Engineering Effort</th>
+              <th class="pb-3">Agency Rate (India)</th>
+              <th class="pb-3">Global / US Equivalent</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 text-slate-200">
+            <tr>
+              <td class="py-2.5 font-bold text-slate-100">Customer Storefront (15 Pages)</td>
+              <td class="py-2.5">145 Hours</td>
+              <td class="py-2.5 text-emerald-400 font-bold">₹1,16,000</td>
+              <td class="py-2.5 text-slate-400">$5,800</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold text-slate-100">Admin ERP Management Portal (10 Modules)</td>
+              <td class="py-2.5">90 Hours</td>
+              <td class="py-2.5 text-emerald-400 font-bold">₹72,000</td>
+              <td class="py-2.5 text-slate-400">$3,600</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold text-slate-100">Capacitor Android Container Setup</td>
+              <td class="py-2.5">Pre-configured</td>
+              <td class="py-2.5 text-emerald-400 font-bold">₹25,000</td>
+              <td class="py-2.5 text-slate-400">$1,200</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold text-slate-100">Responsive QA & Mobile Defect Fixing</td>
+              <td class="py-2.5">16 Defects Closed</td>
+              <td class="py-2.5 text-emerald-400 font-bold">₹15,000</td>
+              <td class="py-2.5 text-slate-400">$750</td>
+            </tr>
+            <tr class="font-black text-sm bg-emerald-950/30">
+              <td class="py-3 text-emerald-300">TOTAL AGENCY DUPLICATION COST</td>
+              <td class="py-3 text-emerald-300">235+ Hours</td>
+              <td class="py-3 text-emerald-400">₹2,28,000</td>
+              <td class="py-3 text-emerald-300">$11,350</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: INVESTMENT & PRICING PACKAGES -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="8">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Commercial Offer</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">Three Simple, Transparent Acquisition Packages</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Tier 1 -->
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-3 print-card">
+          <p class="text-xs font-bold text-slate-400 uppercase">Basic Package</p>
+          <div>
+            <span class="text-3xl font-black text-white">₹45,000</span>
+            <span class="text-xs text-slate-400 block mt-0.5">($550 USD) • Codebase Transfer</span>
+          </div>
+          <ul class="text-xs text-slate-300 space-y-1.5 pt-2 border-t border-slate-800">
+            <li>✔ Full source code handover</li>
+            <li>✔ 15 Store pages + 10 Admin tools</li>
+            <li>✔ Database schema & seed scripts</li>
+            <li>✔ Self-hosted setup guide</li>
+          </ul>
+        </div>
+
+        <!-- Tier 2 (Highlighted) -->
+        <div class="p-5 rounded-3xl bg-emerald-950/40 border-2 border-emerald-500 shadow-xl shadow-emerald-950/50 space-y-3 relative print-card">
+          <span class="absolute -top-3 right-4 bg-emerald-500 text-slate-950 font-black text-[10px] uppercase px-3 py-0.5 rounded-full">
+            Recommended
+          </span>
+          <p class="text-xs font-bold text-emerald-400 uppercase">Turnkey Launch</p>
+          <div>
+            <span class="text-3xl font-black text-white">₹75,000</span>
+            <span class="text-xs text-emerald-300 block mt-0.5">($900 USD) • Fully Managed Setup</span>
+          </div>
+          <ul class="text-xs text-slate-200 space-y-1.5 pt-2 border-t border-emerald-800/60">
+            <li>✔ Everything in Basic</li>
+            <li>✔ Custom brand logo & colors</li>
+            <li>✔ Custom domain & cloud deployment</li>
+            <li>✔ Initial product catalog setup</li>
+            <li>✔ 30-Day bug-fix warranty</li>
+          </ul>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-3 print-card">
+          <p class="text-xs font-bold text-amber-400 uppercase">Premium Enterprise</p>
+          <div>
+            <span class="text-3xl font-black text-white">₹1,10,000</span>
+            <span class="text-xs text-slate-400 block mt-0.5">($1,350 USD) • Web + Android APK</span>
+          </div>
+          <ul class="text-xs text-slate-300 space-y-1.5 pt-2 border-t border-slate-800">
+            <li>✔ Everything in Turnkey</li>
+            <li>✔ Signed Android APK generated</li>
+            <li>✔ Play Store upload assistance</li>
+            <li>✔ Razorpay payment gateway integration</li>
+            <li>✔ 90-Day priority support</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: OPTIONAL ADD-ONS -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="9">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Modular Scale</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">Optional Add-Ons & Production Upgrades</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-slate-100 text-sm">Automated Razorpay Payment Gateway</span>
+            <span class="text-emerald-400 font-extrabold">+₹10,000</span>
+          </div>
+          <p class="text-slate-400 text-[11px]">Instant automated cards, netbanking, and UPI checkout modal with automatic order confirmation webhook.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-slate-100 text-sm">Phone Number OTP Login (Zepto-style)</span>
+            <span class="text-emerald-400 font-extrabold">+₹8,500</span>
+          </div>
+          <p class="text-slate-400 text-[11px]">Fast passwordless SMS OTP login and instant WhatsApp order status notifications for customers.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-slate-100 text-sm">Downloadable GST Tax PDF Invoices</span>
+            <span class="text-emerald-400 font-extrabold">+₹6,500</span>
+          </div>
+          <p class="text-slate-400 text-[11px]">Automated 1-click compliant GST tax invoice PDF generator with HSN codes and store tax info.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-slate-100 text-sm">Live GPS Map Driver Tracking</span>
+            <span class="text-emerald-400 font-extrabold">+₹15,000</span>
+          </div>
+          <p class="text-slate-400 text-[11px]">Real-time Google Maps driver icon tracking screen showing live delivery boy vehicle movement.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: 72-HOUR LAUNCH ROADMAP -->
+    <section class="slide w-full max-w-6xl h-full flex-col justify-center gap-6" data-slide="10">
+      <div>
+        <span class="text-xs font-black tracking-widest text-emerald-400 uppercase">Fast-Track Onboarding</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">Go Live in Under 72 Hours</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-2 print-card">
+          <span class="text-amber-400 font-black text-xs">STEP 01</span>
+          <h3 class="font-extrabold text-sm text-slate-100">Package Selection</h3>
+          <p class="text-slate-400 text-[11px]">Select your preferred acquisition tier and provide your store logo, brand colors, and domain.</p>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-2 print-card">
+          <span class="text-amber-400 font-black text-xs">STEP 02</span>
+          <h3 class="font-extrabold text-sm text-slate-100">Cloud Setup</h3>
+          <p class="text-slate-400 text-[11px]">We configure your live PostgreSQL database, upload the initial catalog, and point your domain.</p>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-2 print-card">
+          <span class="text-amber-400 font-black text-xs">STEP 03</span>
+          <h3 class="font-extrabold text-sm text-slate-100">Review & Test Orders</h3>
+          <p class="text-slate-400 text-[11px]">Run end-to-end checkout and admin dispatch tests on mobile and desktop devices.</p>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-2 print-card">
+          <span class="text-emerald-400 font-black text-xs">STEP 04</span>
+          <h3 class="font-extrabold text-sm text-emerald-300">Official Launch 🚀</h3>
+          <p class="text-slate-400 text-[11px]">Begin accepting customer orders directly with 0% commissions and complete brand control!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM SLIDE CONTROLS BAR -->
+  <footer class="no-print h-14 border-t border-slate-800/80 px-6 flex items-center justify-between bg-slate-950/60 backdrop-blur-md z-50">
+    <div class="flex items-center gap-2">
+      <button onclick="prevSlide()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center gap-1 transition-all">
+        ← Previous
+      </button>
+      <button onclick="nextSlide()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 transition-all shadow-md shadow-emerald-950">
+        Next →
+      </button>
+    </div>
+
+    <!-- Dots -->
+    <div class="hidden sm:flex items-center gap-1.5" id="slideDots">
+      <!-- Generated via JS -->
+    </div>
+
+    <div class="text-[11px] text-slate-500 hidden md:block">
+      Tip: Use <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 font-mono">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 font-mono">→</kbd> arrow keys to navigate
+    </div>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slideIndicator');
+    const dotsContainer = document.getElementById('slideDots');
+    let currentSlide = 0;
+
+    // Generate dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = `w-2 h-2 rounded-full cursor-pointer transition-all ${i === 0 ? 'w-6 bg-emerald-400' : 'bg-slate-700'}`;
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    });
+
+    function updateView() {
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === currentSlide);
+      });
+      indicator.textContent = `Slide ${currentSlide + 1} of ${slides.length}`;
+      Array.from(dotsContainer.children).forEach((dot, i) => {
+        dot.className = `h-2 rounded-full cursor-pointer transition-all ${i === currentSlide ? 'w-6 bg-emerald-400' : 'w-2 bg-slate-700'}`;
+      });
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateView();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateView();
+      }
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateView();
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>

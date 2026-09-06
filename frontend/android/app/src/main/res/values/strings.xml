@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Sri Sai Natural Foods</string>
+    <string name="title_activity_main">Sri Sai Natural Foods</string>
+    <string name="package_name">com.sainaturals.grocery</string>
+    <string name="custom_url_scheme">com.sainaturals.grocery</string>
+</resources>

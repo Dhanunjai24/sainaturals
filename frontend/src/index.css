@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --green-900: #1A2E0A;
+    --green-800: #2D5016;
+    --green-700: #3A6420;
+    --green-600: #4E8828;
+    --green-200: #B5D68A;
+    --green-100: #E4F0D0;
+    --green-50:  #F2F7EC;
+
+    --amber-700: #92630A;
+    --amber-600: #B07A0D;
+    --amber-500: #C8860A;
+    --amber-400: #E09B1A;
+    --amber-100: #FEF3DC;
+    --amber-50:  #FFFBF0;
+
+    --cream:      #FDF8F0;
+    --cream-dark: #F5EDE0;
+
+    --brown-900: #1A0F00;
+    --brown-800: #2C1A05;
+    --brown-600: #5C3D15;
+    --brown-400: #8B6240;
+    --brown-200: #C4A882;
+    --brown-100: #E8D5BC;
+    --brown-50:  #F6EEE3;
+
+    --white: #FFFFFF;
+    --nav-h: 72px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    @apply antialiased;
+    background-color: var(--cream);
+    color: var(--brown-900);
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  /* Responsive image scaling */
+  img, svg, video, canvas {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Custom modern scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Badge pulse */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

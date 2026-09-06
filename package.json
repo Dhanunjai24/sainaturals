@@ -1,0 +1,16 @@
+{
+  "name": "sai-naturals-platform",
+  "version": "1.0.0",
+  "description": "Production Local Grocery Store E-Commerce Platform for Sri Sai Natural Foods",
+  "scripts": {
+    "start:backend": "npm --prefix backend start",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "cap:sync": "npm --prefix frontend run cap:sync",
+    "cap:open": "npm --prefix frontend run cap:open"
+  },
+  "keywords": ["grocery", "ecommerce", "organic", "wood-pressed", "supermarket", "react", "capacitor", "android", "postgresql"],
+  "author": "Sri Sai Natural Foods",
+  "license": "ISC"
+}
