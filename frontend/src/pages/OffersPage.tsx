@@ -11,7 +11,7 @@ export const OffersPage: React.FC = () => {
     async function loadCoupons() {
       try {
         const res = await api.getCoupons();
-        setCoupons(res.coupons);
+        setCoupons(res?.coupons || []);
       } catch (err) {
         console.error('Failed to load coupons:', err);
       }
@@ -19,8 +19,12 @@ export const OffersPage: React.FC = () => {
     loadCoupons();
   }, []);
 
-  const handleCopy = (code: string) => {
-    navigator.clipboard.writeText(code);
+  const handleCopy = async (code: string) => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(code);
+      }
+    } catch (e) {}
     setCopiedCode(code);
     setTimeout(() => setCopiedCode(null), 2000);
   };

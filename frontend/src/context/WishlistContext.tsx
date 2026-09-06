@@ -18,13 +18,18 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
 
   const refreshWishlist = async () => {
-    if (token) {
+    if (token && token !== 'demo_admin_jwt_token' && token !== 'demo_customer_jwt_token') {
       try {
         const res = await api.getWishlist();
-        setWishlist(res.wishlist);
+        setWishlist(res?.wishlist || []);
+        return;
       } catch (e) {
-        console.warn('Could not load wishlist');
+        console.warn('Could not load server wishlist, falling back to local');
       }
+    }
+    const saved = localStorage.getItem('sai_guest_wishlist');
+    if (saved) {
+      try { setWishlist(JSON.parse(saved)); } catch (e) {}
     } else {
       setWishlist([]);
     }
@@ -39,13 +44,32 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const toggleWishlist = async (productId: number) => {
-    if (!token) {
-      alert('Please log in to save items to your wishlist.');
-      return false;
+    if (token && token !== 'demo_admin_jwt_token' && token !== 'demo_customer_jwt_token') {
+      try {
+        const res = await api.toggleWishlist(productId);
+        await refreshWishlist();
+        return res.inWishlist;
+      } catch (err) {
+        console.warn('Server toggleWishlist failed, toggling locally:', err);
+      }
     }
-    const res = await api.toggleWishlist(productId);
-    await refreshWishlist();
-    return res.inWishlist;
+    // Local / Guest wishlist toggle
+    const exists = isInWishlist(productId);
+    let updated: WishlistItem[];
+    if (exists) {
+      updated = wishlist.filter(w => w.product_id !== productId);
+    } else {
+      const newItem: WishlistItem = {
+        id: Date.now(),
+        user_id: 0,
+        product_id: productId,
+        created_at: new Date().toISOString()
+      };
+      updated = [...wishlist, newItem];
+    }
+    setWishlist(updated);
+    localStorage.setItem('sai_guest_wishlist', JSON.stringify(updated));
+    return !exists;
   };
 
   return (

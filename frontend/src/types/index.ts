@@ -36,6 +36,8 @@ export interface Product {
   is_active?: boolean;
   rating: number;
   review_count: number;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface CartItem {
@@ -54,15 +56,17 @@ export interface CartItem {
 
 export interface WishlistItem {
   id: number;
+  user_id?: number;
   product_id: number;
-  name: string;
+  name?: string;
   local_name?: string;
-  price: number;
+  price?: number;
   discount_price?: number;
-  stock_quantity: number;
-  unit: string;
-  image_url: string;
-  rating: number;
+  stock_quantity?: number;
+  unit?: string;
+  image_url?: string;
+  rating?: number;
+  created_at?: string;
 }
 
 export interface Address {
@@ -90,6 +94,9 @@ export interface Coupon {
   max_discount?: number;
   valid_until: string;
   is_active: boolean;
+  max_uses?: number;
+  times_used?: number;
+  used_count?: number;
 }
 
 export interface OrderItem {
@@ -112,20 +119,21 @@ export interface Order {
   shipping_name?: string;
   shipping_phone?: string;
   landmark?: string;
-  subtotal: number;
-  discount_amount: number;
-  delivery_fee: number;
+  subtotal?: number;
+  discount_amount?: number;
+  delivery_fee?: number;
   total_amount: number;
-  payment_method: 'cod' | 'upi' | 'card';
-  payment_status: 'pending' | 'completed' | 'failed' | 'refunded';
-  order_status: 'pending' | 'confirmed' | 'packed' | 'out_for_delivery' | 'delivered' | 'cancelled';
-  delivery_slot: string;
+  payment_method?: 'cod' | 'upi' | 'card' | string;
+  payment_status?: 'pending' | 'completed' | 'paid' | 'failed' | 'refunded' | string;
+  order_status: 'pending' | 'confirmed' | 'packed' | 'out_for_delivery' | 'delivered' | 'cancelled' | string;
+  delivery_slot?: string;
   notes?: string;
   created_at: string;
   street_address?: string;
   area?: string;
   city?: string;
   pincode?: string;
+  delivery_address?: string;
   items?: OrderItem[];
   delivery?: {
     driver_name: string;
@@ -144,7 +152,7 @@ export interface Review {
   title: string;
   comment: string;
   status: string;
-  created_at: string;
+  created_at?: string;
 }
 
 export interface Banner {

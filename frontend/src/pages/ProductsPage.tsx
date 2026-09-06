@@ -35,8 +35,8 @@ export const ProductsPage: React.FC = () => {
           }),
           api.getCategories()
         ]);
-        setProducts(prodRes.products);
-        setCategories(catRes.categories);
+        setProducts(prodRes?.products || []);
+        setCategories(catRes?.categories || []);
       } catch (err) {
         console.error('Failed to load products:', err);
       } finally {

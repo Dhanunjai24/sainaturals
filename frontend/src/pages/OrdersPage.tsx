@@ -13,7 +13,7 @@ export const OrdersPage: React.FC = () => {
       try {
         setIsLoading(true);
         const res = await api.getMyOrders();
-        setOrders(res.orders);
+        setOrders(res?.orders || []);
       } catch (err) {
         console.error('Failed to load orders:', err);
       } finally {

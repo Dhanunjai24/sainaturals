@@ -16,8 +16,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem('sai_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('sai_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
   });
   const [token, setToken] = useState<string | null>(() => localStorage.getItem('sai_token'));
   const [isLoading, setIsLoading] = useState(true);
@@ -27,8 +31,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (token) {
         try {
           const res = await api.getMe();
-          setUser(res.user);
-          localStorage.setItem('sai_user', JSON.stringify(res.user));
+          if (res && res.user) {
+            setUser(res.user);
+            localStorage.setItem('sai_user', JSON.stringify(res.user));
+          } else {
+            logout();
+          }
         } catch (err) {
           console.warn('Session expired or invalid token');
           logout();

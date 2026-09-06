@@ -24,9 +24,9 @@ export const HomePage: React.FC = () => {
           api.getCategories(),
           api.getProducts({ featured: true })
         ]);
-        setBanners(bannerRes.banners);
-        setCategories(catRes.categories);
-        setFeaturedProducts(featRes.products);
+        setBanners(bannerRes?.banners || []);
+        setCategories(catRes?.categories || []);
+        setFeaturedProducts(featRes?.products || []);
       } catch (err) {
         console.error('Error loading homepage data:', err);
       } finally {
