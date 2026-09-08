@@ -37,10 +37,12 @@ export const AdminProducts: React.FC = () => {
         api.getProducts({}),
         api.getCategories()
       ]);
-      setProducts(pRes.products);
-      setCategories(cRes.categories);
+      setProducts(Array.isArray(pRes?.products) ? pRes.products : []);
+      setCategories(Array.isArray(cRes?.categories) ? cRes.categories : []);
     } catch (err) {
       console.error('Failed to load products:', err);
+      setProducts([]);
+      setCategories([]);
     } finally {
       setIsLoading(false);
     }
@@ -104,9 +106,9 @@ export const AdminProducts: React.FC = () => {
     }
   };
 
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(search.toLowerCase()) ||
-    (p.local_name && p.local_name.toLowerCase().includes(search.toLowerCase()))
+  const filtered = (products || []).filter(p =>
+    (p?.name && p.name.toLowerCase().includes(search.toLowerCase())) ||
+    (p?.local_name && p.local_name.toLowerCase().includes(search.toLowerCase()))
   );
 
   return (

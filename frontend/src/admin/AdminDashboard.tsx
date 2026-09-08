@@ -40,33 +40,36 @@ export const AdminDashboard: React.FC = () => {
   const kpis = [
     {
       label: 'Total Revenue',
-      value: `₹${stats.totalRevenue.toLocaleString('en-IN')}`,
+      value: `₹${(Number(stats?.totalRevenue) || 0).toLocaleString('en-IN')}`,
       sub: 'Excluding cancellations',
       icon: IndianRupee,
       color: 'bg-emerald-50 text-emerald-700 border-emerald-200'
     },
     {
       label: 'Total Orders',
-      value: stats.totalOrders,
+      value: stats?.totalOrders ?? 0,
       sub: 'All-time grocery orders',
       icon: ShoppingBag,
       color: 'bg-blue-50 text-blue-700 border-blue-200'
     },
     {
       label: 'Registered Customers',
-      value: stats.totalCustomers,
+      value: stats?.totalCustomers ?? 0,
       sub: 'Local retail shoppers',
       icon: Users,
       color: 'bg-purple-50 text-purple-700 border-purple-200'
     },
     {
       label: 'Low Stock Alerts',
-      value: stats.lowStockCount,
+      value: stats?.lowStockCount ?? 0,
       sub: 'Items with ≤ 10 units',
       icon: AlertTriangle,
-      color: stats.lowStockCount > 0 ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse' : 'bg-stone-50 text-stone-700 border-stone-200'
+      color: (stats?.lowStockCount || 0) > 0 ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse' : 'bg-stone-50 text-stone-700 border-stone-200'
     },
   ];
+
+  const recentOrders = Array.isArray(stats?.recentOrders) ? stats.recentOrders : [];
+  const topProducts = Array.isArray(stats?.topProducts) ? stats.topProducts : [];
 
   return (
     <div className="space-y-8">
@@ -121,25 +124,31 @@ export const AdminDashboard: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone-100">
-                {stats.recentOrders.map((o) => (
-                  <tr key={o.id} className="hover:bg-stone-50">
-                    <td className="py-3 font-mono font-bold text-stone-900">{o.order_number}</td>
-                    <td className="py-3 text-stone-700 font-medium">{o.customer_name || 'Customer'}</td>
-                    <td className="py-3 font-bold text-stone-950">₹{o.total_amount}</td>
-                    <td className="py-3">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                        o.order_status === 'delivered' ? 'bg-emerald-100 text-emerald-800' :
-                        o.order_status === 'cancelled' ? 'bg-rose-100 text-rose-800' :
-                        'bg-amber-100 text-amber-800'
-                      }`}>
-                        {o.order_status}
-                      </span>
-                    </td>
-                    <td className="py-3 text-right text-stone-400">
-                      {new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
-                    </td>
+                {recentOrders.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-6 text-center text-stone-400">No recent orders found.</td>
                   </tr>
-                ))}
+                ) : (
+                  recentOrders.map((o) => (
+                    <tr key={o.id} className="hover:bg-stone-50">
+                      <td className="py-3 font-mono font-bold text-stone-900">{o.order_number}</td>
+                      <td className="py-3 text-stone-700 font-medium">{o.customer_name || 'Customer'}</td>
+                      <td className="py-3 font-bold text-stone-950">₹{o.total_amount}</td>
+                      <td className="py-3">
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                          o.order_status === 'delivered' ? 'bg-emerald-100 text-emerald-800' :
+                          o.order_status === 'cancelled' ? 'bg-rose-100 text-rose-800' :
+                          'bg-amber-100 text-amber-800'
+                        }`}>
+                          {o.order_status}
+                        </span>
+                      </td>
+                      <td className="py-3 text-right text-stone-400">
+                        {new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -150,19 +159,23 @@ export const AdminDashboard: React.FC = () => {
           <h3 className="font-extrabold text-sm text-stone-900">Top Selling Products</h3>
 
           <div className="space-y-3">
-            {stats.topProducts.map((p) => (
-              <div key={p.id} className="flex items-center gap-3 py-1.5 border-b border-stone-100 last:border-0 text-xs">
-                <img src={p.image_url} alt={p.name} className="w-10 h-10 rounded-xl object-contain bg-white border border-stone-100 p-0.5" />
-                <div className="flex-1 min-w-0">
-                  <p className="font-bold text-stone-900 truncate">{p.name}</p>
-                  <p className="text-[11px] text-stone-400">₹{p.discount_price || p.price} · Stock: {p.stock_quantity}</p>
+            {topProducts.length === 0 ? (
+              <p className="text-xs text-stone-400 py-4 text-center">No sales data available yet.</p>
+            ) : (
+              topProducts.map((p) => (
+                <div key={p.id} className="flex items-center gap-3 py-1.5 border-b border-stone-100 last:border-0 text-xs">
+                  <img src={p.image_url} alt={p.name} className="w-10 h-10 rounded-xl object-contain bg-white border border-stone-100 p-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-stone-900 truncate">{p.name}</p>
+                    <p className="text-[11px] text-stone-400">₹{p.discount_price || p.price} · Stock: {p.stock_quantity}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="font-extrabold text-brand-800">{p.total_sold}</span>
+                    <span className="text-[10px] text-stone-400 block">sold</span>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <span className="font-extrabold text-brand-800">{p.total_sold}</span>
-                  <span className="text-[10px] text-stone-400 block">sold</span>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

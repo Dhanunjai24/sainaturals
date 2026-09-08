@@ -13,9 +13,10 @@ export const AdminCoupons: React.FC = () => {
   const loadCoupons = async () => {
     try {
       const res = await api.getCoupons(true);
-      setCoupons(res.coupons);
+      setCoupons(Array.isArray(res?.coupons) ? res.coupons : []);
     } catch (err) {
       console.error('Failed to load coupons:', err);
+      setCoupons([]);
     }
   };
 
@@ -27,7 +28,7 @@ export const AdminCoupons: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {coupons.map((c) => (
+        {(coupons || []).map((c) => (
           <div key={c.id} className="bg-white p-5 rounded-3xl border border-stone-200 shadow-sm space-y-3">
             <div className="flex items-center justify-between">
               <span className="font-mono font-black text-lg text-brand-900">{c.code}</span>

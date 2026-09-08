@@ -13,9 +13,10 @@ export const AdminBanners: React.FC = () => {
   const loadBanners = async () => {
     try {
       const res = await api.getBanners();
-      setBanners(res.banners);
+      setBanners(Array.isArray(res?.banners) ? res.banners : []);
     } catch (err) {
       console.error('Failed to load banners:', err);
+      setBanners([]);
     }
   };
 
@@ -27,7 +28,7 @@ export const AdminBanners: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {banners.map((b) => (
+        {(banners || []).map((b) => (
           <div key={b.id} className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm flex flex-col">
             <div className="h-44 bg-stone-100 relative">
               <img src={b.image_url} alt={b.title} className="w-full h-full object-cover" />

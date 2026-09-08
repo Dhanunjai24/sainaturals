@@ -18,9 +18,10 @@ export const AdminOrders: React.FC = () => {
     try {
       setIsLoading(true);
       const res = await api.getAdminOrders({ status: statusFilter, search });
-      setOrders(res.orders);
+      setOrders(Array.isArray(res?.orders) ? res.orders : []);
     } catch (err) {
       console.error('Failed to load orders:', err);
+      setOrders([]);
     } finally {
       setIsLoading(false);
     }
@@ -43,10 +44,10 @@ export const AdminOrders: React.FC = () => {
     }
   };
 
-  const filteredOrders = orders.filter(o =>
-    o.order_number.toLowerCase().includes(search.toLowerCase()) ||
-    (o.customer_name && o.customer_name.toLowerCase().includes(search.toLowerCase())) ||
-    (o.customer_phone && o.customer_phone.includes(search))
+  const filteredOrders = (orders || []).filter(o =>
+    (o?.order_number && o.order_number.toLowerCase().includes(search.toLowerCase())) ||
+    (o?.customer_name && o.customer_name.toLowerCase().includes(search.toLowerCase())) ||
+    (o?.customer_phone && o.customer_phone.includes(search))
   );
 
   return (

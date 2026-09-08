@@ -17,10 +17,12 @@ export const AdminInventory: React.FC = () => {
     try {
       setIsLoading(true);
       const res = await api.getAdminInventory(filterLow);
-      setInventory(res.inventory);
-      setLowStockCount(res.lowStockCount);
+      setInventory(Array.isArray(res?.inventory) ? res.inventory : []);
+      setLowStockCount(typeof res?.lowStockCount === 'number' ? res.lowStockCount : 0);
     } catch (err) {
       console.error('Failed to load inventory:', err);
+      setInventory([]);
+      setLowStockCount(0);
     } finally {
       setIsLoading(false);
     }

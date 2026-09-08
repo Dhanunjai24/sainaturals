@@ -1,4 +1,4 @@
-import { Product, Category, Coupon, Banner, Review } from '../types';
+import { Product, Category, Coupon, Banner, Review, Order } from '../types';
 
 export const FALLBACK_CATEGORIES: Category[] = [
   {
@@ -456,3 +456,267 @@ export const FALLBACK_REVIEWS: Review[] = [
     "status": "approved"
   }
 ];
+
+export const FALLBACK_ADMIN_ORDERS: Order[] = [
+  {
+    id: 101,
+    order_number: 'SSNF-20260908-0101',
+    user_id: 2,
+    customer_name: 'Sai Ramesh Kumar',
+    customer_email: 'customer@sainaturals.com',
+    customer_phone: '+91 98765 43210',
+    shipping_name: 'Sai Ramesh Kumar',
+    shipping_phone: '+91 98765 43210',
+    street_address: 'Flat 302, Sri Sai Enclave, Kaman Main Road',
+    landmark: 'Beside Gopal Nagar Bus Stop',
+    area: 'Hafeezpet',
+    city: 'Hyderabad',
+    pincode: '500085',
+    subtotal: 1350,
+    delivery_fee: 0,
+    total_amount: 1350,
+    payment_method: 'upi',
+    payment_status: 'paid',
+    order_status: 'out_for_delivery',
+    delivery_slot: 'Morning (8:00 AM - 11:00 AM)',
+    created_at: new Date(Date.now() - 2 * 3600000).toISOString(),
+    items: [
+      {
+        id: 1,
+        order_id: 101,
+        product_id: 1,
+        product_name: 'Single-Estate Black Mustard Oil · 1L',
+        unit_price: 340,
+        quantity: 2,
+        total_price: 680
+      },
+      {
+        id: 2,
+        order_id: 101,
+        product_id: 7,
+        product_name: 'A2 Vedic Bilona Gir Cow Cultured Ghee · 500ml',
+        unit_price: 670,
+        quantity: 1,
+        total_price: 670
+      }
+    ]
+  },
+  {
+    id: 102,
+    order_number: 'SSNF-20260908-0102',
+    user_id: 3,
+    customer_name: 'Pooja Reddy',
+    customer_email: 'pooja.reddy@gmail.com',
+    customer_phone: '+91 91234 56789',
+    shipping_name: 'Pooja Reddy',
+    shipping_phone: '+91 91234 56789',
+    street_address: 'Villa 14, Silicon Valley Meadows',
+    landmark: 'Near Hafeezpet Flyover',
+    area: 'Hafeezpet',
+    city: 'Hyderabad',
+    pincode: '500085',
+    subtotal: 820,
+    delivery_fee: 0,
+    total_amount: 820,
+    payment_method: 'cod',
+    payment_status: 'pending',
+    order_status: 'confirmed',
+    delivery_slot: 'Evening (5:00 PM - 8:00 PM)',
+    created_at: new Date(Date.now() - 5 * 3600000).toISOString(),
+    items: [
+      {
+        id: 3,
+        order_id: 102,
+        product_id: 3,
+        product_name: 'Wood-Pressed White Sesame Oil (Til Oil) · 1L',
+        unit_price: 490,
+        quantity: 1,
+        total_price: 490
+      },
+      {
+        id: 4,
+        order_id: 102,
+        product_id: 8,
+        product_name: 'Unpolished Organic Toor Dal · 1kg',
+        unit_price: 195,
+        quantity: 1,
+        total_price: 195
+      },
+      {
+        id: 5,
+        order_id: 102,
+        product_id: 12,
+        product_name: 'Wild Multi-Flora Raw Honey · 500g',
+        unit_price: 480,
+        quantity: 1,
+        total_price: 480
+      }
+    ]
+  },
+  {
+    id: 103,
+    order_number: 'SSNF-20260907-0099',
+    user_id: 4,
+    customer_name: 'Venkat Rao',
+    customer_email: 'venkat.rao@outlook.com',
+    customer_phone: '+91 99887 76655',
+    shipping_name: 'Venkat Rao',
+    shipping_phone: '+91 99887 76655',
+    street_address: 'Flat 504, Aparna CyberLife',
+    landmark: 'Nallagandla Road',
+    area: 'Kondapur',
+    city: 'Hyderabad',
+    pincode: '500084',
+    subtotal: 2150,
+    delivery_fee: 0,
+    total_amount: 2150,
+    payment_method: 'upi',
+    payment_status: 'paid',
+    order_status: 'delivered',
+    delivery_slot: 'Morning (8:00 AM - 11:00 AM)',
+    created_at: new Date(Date.now() - 26 * 3600000).toISOString(),
+    items: [
+      {
+        id: 6,
+        order_id: 103,
+        product_id: 2,
+        product_name: 'Wood-Pressed Groundnut Oil · 5L Can',
+        unit_price: 1750,
+        quantity: 1,
+        total_price: 1750
+      },
+      {
+        id: 7,
+        order_id: 103,
+        product_id: 10,
+        product_name: 'Organic Guntur Salem Sannam Red Chilli Powder · 500g',
+        unit_price: 240,
+        quantity: 1,
+        total_price: 240
+      }
+    ]
+  },
+  {
+    id: 104,
+    order_number: 'SSNF-20260907-0098',
+    user_id: 5,
+    customer_name: 'Ananya Sharma',
+    customer_email: 'ananya.s@gmail.com',
+    customer_phone: '+91 98450 11223',
+    shipping_name: 'Ananya Sharma',
+    shipping_phone: '+91 98450 11223',
+    street_address: 'Plot 88, Shilpa Avenue Colony',
+    landmark: 'Behind Sai Baba Temple',
+    area: 'Hafeezpet',
+    city: 'Hyderabad',
+    pincode: '500085',
+    subtotal: 580,
+    delivery_fee: 0,
+    total_amount: 580,
+    payment_method: 'upi',
+    payment_status: 'paid',
+    order_status: 'delivered',
+    delivery_slot: 'Afternoon (12:00 PM - 3:00 PM)',
+    created_at: new Date(Date.now() - 30 * 3600000).toISOString(),
+    items: [
+      {
+        id: 8,
+        order_id: 104,
+        product_id: 9,
+        product_name: 'Unpolished Whole Moong Dal (Green Gram) · 1kg',
+        unit_price: 180,
+        quantity: 2,
+        total_price: 360
+      },
+      {
+        id: 9,
+        order_id: 104,
+        product_id: 11,
+        product_name: 'Stone-Ground Single-Origin Turmeric Powder · 250g',
+        unit_price: 120,
+        quantity: 1,
+        total_price: 120
+      }
+    ]
+  }
+];
+
+export const FALLBACK_ADMIN_CUSTOMERS: Array<any> = [
+  {
+    id: 2,
+    name: 'Sai Ramesh Kumar',
+    email: 'customer@sainaturals.com',
+    phone: '+91 98765 43210',
+    role: 'customer',
+    total_orders: 8,
+    total_spend: 11450,
+    created_at: '2026-06-15T10:00:00.000Z'
+  },
+  {
+    id: 3,
+    name: 'Pooja Reddy',
+    email: 'pooja.reddy@gmail.com',
+    phone: '+91 91234 56789',
+    role: 'customer',
+    total_orders: 5,
+    total_spend: 6820,
+    created_at: '2026-07-02T14:30:00.000Z'
+  },
+  {
+    id: 4,
+    name: 'Venkat Rao',
+    email: 'venkat.rao@outlook.com',
+    phone: '+91 99887 76655',
+    role: 'customer',
+    total_orders: 12,
+    total_spend: 24300,
+    created_at: '2026-05-18T09:15:00.000Z'
+  },
+  {
+    id: 5,
+    name: 'Ananya Sharma',
+    email: 'ananya.s@gmail.com',
+    phone: '+91 98450 11223',
+    role: 'customer',
+    total_orders: 3,
+    total_spend: 3450,
+    created_at: '2026-08-10T16:45:00.000Z'
+  }
+];
+
+export const FALLBACK_ADMIN_SALES_REPORT = {
+  totalRevenue: 64850,
+  totalOrders: 42,
+  averageOrderValue: 1544,
+  paymentSplit: {
+    upi: 48200,
+    cod: 16650
+  },
+  dailySales: [
+    { date: '02 Sep', amount: 8400 },
+    { date: '03 Sep', amount: 9200 },
+    { date: '04 Sep', amount: 7650 },
+    { date: '05 Sep', amount: 11300 },
+    { date: '06 Sep', amount: 12500 },
+    { date: '07 Sep', amount: 9400 },
+    { date: '08 Sep', amount: 6400 }
+  ]
+};
+
+export const FALLBACK_ADMIN_STATS = {
+  totalRevenue: 64850,
+  totalOrders: 42,
+  totalCustomers: 18,
+  lowStockCount: 2,
+  recentOrders: FALLBACK_ADMIN_ORDERS,
+  topProducts: FALLBACK_PRODUCTS.slice(0, 5).map((p, idx) => ({
+    id: p.id,
+    name: p.name,
+    image_url: p.image_url,
+    price: p.price,
+    discount_price: p.discount_price,
+    stock_quantity: p.stock_quantity,
+    total_sold: 38 - idx * 6
+  }))
+};
+

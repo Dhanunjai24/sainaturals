@@ -7,6 +7,7 @@ import { WishlistProvider } from './context/WishlistContext';
 // Layout
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 
 // Customer Pages
 import { HomePage } from './pages/HomePage';
@@ -52,10 +53,11 @@ const CustomerLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <CartProvider>
-          <WishlistProvider>
-            <Routes>
+      <ErrorBoundary>
+        <AuthProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <Routes>
               {/* Customer Routes */}
               <Route path="/" element={<CustomerLayout><HomePage /></CustomerLayout>} />
               <Route path="/products" element={<CustomerLayout><ProductsPage /></CustomerLayout>} />
@@ -92,7 +94,8 @@ export const App: React.FC = () => {
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </ErrorBoundary>
+  </BrowserRouter>
   );
 };
 

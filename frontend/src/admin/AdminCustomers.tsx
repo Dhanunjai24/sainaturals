@@ -11,9 +11,10 @@ export const AdminCustomers: React.FC = () => {
       try {
         setIsLoading(true);
         const res = await api.getAdminCustomers();
-        setCustomers(res.customers);
+        setCustomers(Array.isArray(res?.customers) ? res.customers : []);
       } catch (err) {
         console.error('Failed to load customers:', err);
+        setCustomers([]);
       } finally {
         setIsLoading(false);
       }
@@ -41,12 +42,12 @@ export const AdminCustomers: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100">
-              {customers.map((c) => (
+              {(customers || []).map((c) => (
                 <tr key={c.id} className="hover:bg-stone-50">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-brand-100 text-brand-800 font-bold flex items-center justify-center text-xs">
-                        {c.name.charAt(0).toUpperCase()}
+                        {c.name ? c.name.charAt(0).toUpperCase() : 'C'}
                       </div>
                       <span className="font-bold text-stone-900">{c.name}</span>
                     </div>

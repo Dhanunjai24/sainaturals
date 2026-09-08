@@ -4,7 +4,11 @@ import {
   FALLBACK_PRODUCTS, 
   FALLBACK_COUPONS, 
   FALLBACK_BANNERS, 
-  FALLBACK_REVIEWS 
+  FALLBACK_REVIEWS,
+  FALLBACK_ADMIN_ORDERS,
+  FALLBACK_ADMIN_CUSTOMERS,
+  FALLBACK_ADMIN_SALES_REPORT,
+  FALLBACK_ADMIN_STATS
 } from './fallbackData';
 
 const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/api` : '/api';
@@ -20,6 +24,49 @@ function getHeaders(): HeadersInit {
   return headers;
 }
 
+// Local demo storage helpers for static / offline resilience
+function getStoredAdminOrders(): Order[] {
+  try {
+    const saved = localStorage.getItem('sai_demo_admin_orders');
+    if (saved) return JSON.parse(saved);
+  } catch {}
+  return [...FALLBACK_ADMIN_ORDERS];
+}
+
+function saveStoredAdminOrders(orders: Order[]): void {
+  try {
+    localStorage.setItem('sai_demo_admin_orders', JSON.stringify(orders));
+  } catch {}
+}
+
+function getStoredProducts(): Product[] {
+  try {
+    const saved = localStorage.getItem('sai_demo_products');
+    if (saved) return JSON.parse(saved);
+  } catch {}
+  return [...FALLBACK_PRODUCTS];
+}
+
+function saveStoredProducts(products: Product[]): void {
+  try {
+    localStorage.setItem('sai_demo_products', JSON.stringify(products));
+  } catch {}
+}
+
+function getStoredCategories(): Category[] {
+  try {
+    const saved = localStorage.getItem('sai_demo_categories');
+    if (saved) return JSON.parse(saved);
+  } catch {}
+  return [...FALLBACK_CATEGORIES];
+}
+
+function saveStoredCategories(categories: Category[]): void {
+  try {
+    localStorage.setItem('sai_demo_categories', JSON.stringify(categories));
+  } catch {}
+}
+
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE}${endpoint}`;
   const config: RequestInit = {
@@ -31,10 +78,22 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
   };
 
   const res = await fetch(url, config);
-  const data = await res.json().catch(() => ({}));
+  const contentType = res.headers.get('content-type') || '';
+
+  // If server returns HTML (e.g. Vercel SPA rewrite fallback for missing backend), throw to activate fallback mode
+  if (contentType.includes('text/html')) {
+    throw new Error(`Non-JSON response received from ${url} (status: ${res.status}). Offline/fallback mode active.`);
+  }
+
+  let data: any;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error(`Malformed JSON response from ${url} (status: ${res.status})`);
+  }
 
   if (!res.ok) {
-    throw new Error(data.message || `Request failed with status ${res.status}`);
+    throw new Error(data?.message || `Request failed with status ${res.status}`);
   }
 
   return data as T;
@@ -201,26 +260,89 @@ export const api = {
     return { product, reviews };
   },
 
-  createProduct: (payload: Partial<Product>) =>
-    request<{ message: string; product: Product }>('/products', {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    }),
+  createProduct: async (payload: Partial<Product>) => {
+    try {
+      const res = await request<{ message: string; product: Product }>('/products', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+      if (res && res.product) return res;
+    } catch (err) {
+      console.warn('Backend unavailable, creating demo product locally:', err);
+    }
+    const products = getStoredProducts();
+    const newProduct: Product = {
+      id: Date.now(),
+      category_id: payload.category_id || 1,
+      name: payload.name || 'New Product',
+      local_name: payload.local_name,
+      slug: (payload.name || 'product').toLowerCase().replace(/\s+/g, '-'),
+      description: payload.description || '',
+      price: Number(payload.price) || 100,
+      discount_price: payload.discount_price ? Number(payload.discount_price) : undefined,
+      stock_quantity: Number(payload.stock_quantity) || 10,
+      unit: payload.unit || '1 Unit',
+      image_url: payload.image_url || '/images/sesame-oil-1l.jpeg',
+      rating: 5,
+      review_count: 0,
+      is_featured: !!payload.is_featured,
+      is_active: payload.is_active !== false
+    };
+    products.unshift(newProduct);
+    saveStoredProducts(products);
+    return { message: 'Product created successfully (Demo Mode)', product: newProduct };
+  },
 
-  updateProduct: (id: number, payload: Partial<Product>) =>
-    request<{ message: string; product: Product }>(`/products/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(payload)
-    }),
+  updateProduct: async (id: number, payload: Partial<Product>) => {
+    try {
+      const res = await request<{ message: string; product: Product }>(`/products/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+      });
+      if (res && res.product) return res;
+    } catch (err) {
+      console.warn('Backend unavailable, updating demo product locally:', err);
+    }
+    const products = getStoredProducts();
+    const index = products.findIndex(p => p.id === id);
+    if (index !== -1) {
+      products[index] = { ...products[index], ...payload };
+      saveStoredProducts(products);
+      return { message: 'Product updated successfully (Demo Mode)', product: products[index] };
+    }
+    throw new Error('Product not found');
+  },
 
-  deleteProduct: (id: number) =>
-    request<{ message: string }>(`/products/${id}`, { method: 'DELETE' }),
+  deleteProduct: async (id: number) => {
+    try {
+      return await request<{ message: string }>(`/products/${id}`, { method: 'DELETE' });
+    } catch (err) {
+      console.warn('Backend unavailable, deleting demo product locally:', err);
+      const products = getStoredProducts().filter(p => p.id !== id);
+      saveStoredProducts(products);
+      return { message: 'Product deleted (Demo Mode)' };
+    }
+  },
 
-  adjustStock: (id: number, delta: number, reason?: string) =>
-    request<{ message: string; newStock: number }>(`/products/${id}/stock`, {
-      method: 'POST',
-      body: JSON.stringify({ delta, reason })
-    }),
+  adjustStock: async (id: number, delta: number, reason?: string) => {
+    try {
+      const res = await request<{ message: string; newStock: number }>(`/products/${id}/stock`, {
+        method: 'POST',
+        body: JSON.stringify({ delta, reason })
+      });
+      if (res && typeof res.newStock === 'number') return res;
+    } catch (err) {
+      console.warn('Backend unavailable, adjusting demo stock locally:', err);
+    }
+    const products = getStoredProducts();
+    const prod = products.find(p => p.id === id);
+    if (prod) {
+      prod.stock_quantity = Math.max(0, prod.stock_quantity + delta);
+      saveStoredProducts(products);
+      return { message: 'Stock updated (Demo Mode)', newStock: prod.stock_quantity };
+    }
+    throw new Error('Product not found');
+  },
 
   // Categories
   getCategories: async () => {
@@ -230,23 +352,65 @@ export const api = {
     } catch (err) {
       console.warn('Backend unavailable, serving fallback categories:', err);
     }
-    return { categories: FALLBACK_CATEGORIES };
+    return { categories: getStoredCategories() };
   },
 
-  createCategory: (payload: Partial<Category>) =>
-    request<{ message: string; category: Category }>('/categories', {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    }),
+  createCategory: async (payload: Partial<Category>) => {
+    try {
+      const res = await request<{ message: string; category: Category }>('/categories', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+      if (res && res.category) return res;
+    } catch (err) {
+      console.warn('Backend unavailable, creating demo category locally:', err);
+    }
+    const categories = getStoredCategories();
+    const newCat: Category = {
+      id: Date.now(),
+      name: payload.name || 'New Category',
+      local_name: payload.local_name,
+      slug: (payload.name || 'category').toLowerCase().replace(/\s+/g, '-'),
+      description: payload.description || '',
+      icon: payload.icon || 'Package',
+      image_url: payload.image_url || '/images/sesame-oil-shelf-1l.jpeg',
+      display_order: categories.length + 1
+    };
+    categories.push(newCat);
+    saveStoredCategories(categories);
+    return { message: 'Category created successfully (Demo Mode)', category: newCat };
+  },
 
-  updateCategory: (id: number, payload: Partial<Category>) =>
-    request<{ message: string; category: Category }>(`/categories/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(payload)
-    }),
+  updateCategory: async (id: number, payload: Partial<Category>) => {
+    try {
+      const res = await request<{ message: string; category: Category }>(`/categories/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+      });
+      if (res && res.category) return res;
+    } catch (err) {
+      console.warn('Backend unavailable, updating demo category locally:', err);
+    }
+    const categories = getStoredCategories();
+    const idx = categories.findIndex(c => c.id === id);
+    if (idx !== -1) {
+      categories[idx] = { ...categories[idx], ...payload };
+      saveStoredCategories(categories);
+      return { message: 'Category updated successfully (Demo Mode)', category: categories[idx] };
+    }
+    throw new Error('Category not found');
+  },
 
-  deleteCategory: (id: number) =>
-    request<{ message: string }>(`/categories/${id}`, { method: 'DELETE' }),
+  deleteCategory: async (id: number) => {
+    try {
+      return await request<{ message: string }>(`/categories/${id}`, { method: 'DELETE' });
+    } catch (err) {
+      console.warn('Backend unavailable, deleting demo category locally:', err);
+      const categories = getStoredCategories().filter(c => c.id !== id);
+      saveStoredCategories(categories);
+      return { message: 'Category deleted (Demo Mode)' };
+    }
+  },
 
   // Cart
   getCart: () =>
@@ -374,67 +538,117 @@ export const api = {
   // Admin
   getAdminDashboard: async () => {
     try {
-      return await request<AdminStats>('/admin/dashboard');
+      const res = await request<AdminStats>('/admin/dashboard');
+      if (res && typeof res.totalRevenue === 'number' && Array.isArray(res.recentOrders) && Array.isArray(res.topProducts)) {
+        return res;
+      }
     } catch (err) {
-      // Fallback dashboard stats for preview/demo
-      return {
-        totalRevenue: 28450,
-        totalOrders: 32,
-        totalCustomers: 18,
-        lowStockCount: 2,
-        recentOrders: [
-          {
-            id: 101,
-            order_number: 'SSNF-20260906-8821',
-            user_id: 2,
-            customer_name: 'Sai Customer',
-            customer_email: 'customer@sainaturals.com',
-            total_amount: 1450,
-            order_status: 'out_for_delivery',
-            payment_status: 'paid',
-            payment_method: 'upi',
-            delivery_slot: 'Morning (8:00 AM - 11:00 AM)',
-            created_at: new Date().toISOString()
-          }
-        ],
-        topProducts: FALLBACK_PRODUCTS.slice(0, 5).map(p => ({
-          id: p.id,
-          name: p.name,
-          image_url: p.image_url,
-          price: p.price,
-          discount_price: p.discount_price,
-          stock_quantity: p.stock_quantity,
-          total_sold: 24
-        }))
-      };
+      console.warn('Backend unavailable, serving fallback admin stats:', err);
     }
+    const orders = getStoredAdminOrders();
+    const products = getStoredProducts();
+    const lowStockCount = products.filter(p => p.stock_quantity <= 10).length;
+    const validOrders = orders.filter(o => o.order_status !== 'cancelled');
+    const totalRevenue = validOrders.reduce((sum, o) => sum + (o.total_amount || 0), 0);
+    return {
+      totalRevenue: totalRevenue || FALLBACK_ADMIN_STATS.totalRevenue,
+      totalOrders: orders.length || FALLBACK_ADMIN_STATS.totalOrders,
+      totalCustomers: FALLBACK_ADMIN_CUSTOMERS.length,
+      lowStockCount: lowStockCount || FALLBACK_ADMIN_STATS.lowStockCount,
+      recentOrders: orders.slice(0, 5),
+      topProducts: products.slice(0, 5).map((p, idx) => ({
+        id: p.id,
+        name: p.name,
+        image_url: p.image_url,
+        price: p.price,
+        discount_price: p.discount_price,
+        stock_quantity: p.stock_quantity,
+        total_sold: 38 - idx * 6
+      }))
+    };
   },
 
-  getAdminOrders: (params: { status?: string; search?: string } = {}) => {
-    const query = new URLSearchParams();
-    if (params.status) query.append('status', params.status);
-    if (params.search) query.append('search', params.search);
-    return request<{ count: number; orders: Order[] }>(`/admin/orders?${query.toString()}`);
+  getAdminOrders: async (params: { status?: string; search?: string } = {}) => {
+    try {
+      const query = new URLSearchParams();
+      if (params.status) query.append('status', params.status);
+      if (params.search) query.append('search', params.search);
+      const res = await request<{ count: number; orders: Order[] }>(`/admin/orders?${query.toString()}`);
+      if (res && Array.isArray(res.orders)) return res;
+    } catch (err) {
+      console.warn('Backend unavailable, serving fallback admin orders:', err);
+    }
+    let orders = getStoredAdminOrders();
+    if (params.status && params.status !== 'all') {
+      orders = orders.filter(o => o.order_status === params.status);
+    }
+    if (params.search) {
+      const s = params.search.toLowerCase();
+      orders = orders.filter(o =>
+        o.order_number.toLowerCase().includes(s) ||
+        (o.customer_name && o.customer_name.toLowerCase().includes(s)) ||
+        (o.customer_phone && o.customer_phone.includes(s))
+      );
+    }
+    return { count: orders.length, orders };
   },
 
-  updateOrderStatus: (id: number, status: string) =>
-    request<{ message: string; order: Order }>(`/admin/orders/${id}/status`, {
-      method: 'PUT',
-      body: JSON.stringify({ status })
-    }),
+  updateOrderStatus: async (id: number, status: string) => {
+    try {
+      const res = await request<{ message: string; order: Order }>(`/admin/orders/${id}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status })
+      });
+      if (res && res.order) return res;
+    } catch (err) {
+      console.warn('Backend unavailable, updating local demo order status:', err);
+    }
+    const orders = getStoredAdminOrders();
+    const target = orders.find(o => o.id === id);
+    if (target) {
+      target.order_status = status;
+      saveStoredAdminOrders(orders);
+      return { message: 'Order status updated successfully (Demo Mode).', order: target };
+    }
+    throw new Error('Order not found');
+  },
 
-  getAdminCustomers: () =>
-    request<{ count: number; customers: Array<User & { total_orders: number; total_spend: number }> }>('/admin/customers'),
+  getAdminCustomers: async () => {
+    try {
+      const res = await request<{ count: number; customers: Array<User & { total_orders: number; total_spend: number }> }>('/admin/customers');
+      if (res && Array.isArray(res.customers)) return res;
+    } catch (err) {
+      console.warn('Backend unavailable, serving fallback admin customers:', err);
+    }
+    return { count: FALLBACK_ADMIN_CUSTOMERS.length, customers: FALLBACK_ADMIN_CUSTOMERS };
+  },
 
-  getAdminInventory: (lowStock = false) =>
-    request<{ count: number; lowStockCount: number; inventory: Product[] }>(`/admin/inventory?lowStock=${lowStock}`),
+  getAdminInventory: async (lowStock = false) => {
+    try {
+      const res = await request<{ count: number; lowStockCount: number; inventory: Product[] }>(`/admin/inventory?lowStock=${lowStock}`);
+      if (res && Array.isArray(res.inventory) && typeof res.lowStockCount === 'number') return res;
+    } catch (err) {
+      console.warn('Backend unavailable, serving fallback admin inventory:', err);
+    }
+    const products = getStoredProducts();
+    const lowStockCount = products.filter(p => p.stock_quantity <= 10).length;
+    const inventory = lowStock ? products.filter(p => p.stock_quantity <= 10) : products;
+    return { count: inventory.length, lowStockCount, inventory };
+  },
 
-  getAdminSalesReport: () =>
-    request<{
-      totalRevenue: number;
-      totalOrders: number;
-      averageOrderValue: number;
-      paymentSplit: { cod: number; upi: number };
-      dailySales: Array<{ date: string; amount: number }>;
-    }>('/admin/reports/sales')
+  getAdminSalesReport: async () => {
+    try {
+      const res = await request<{
+        totalRevenue: number;
+        totalOrders: number;
+        averageOrderValue: number;
+        paymentSplit: { cod: number; upi: number };
+        dailySales: Array<{ date: string; amount: number }>;
+      }>('/admin/reports/sales');
+      if (res && typeof res.totalRevenue === 'number') return res;
+    } catch (err) {
+      console.warn('Backend unavailable, serving fallback admin sales report:', err);
+    }
+    return FALLBACK_ADMIN_SALES_REPORT;
+  }
 };

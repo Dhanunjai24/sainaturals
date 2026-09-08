@@ -9,7 +9,7 @@ import { useAuth } from '../context/AuthContext';
 import { StoreStatusBadge } from '../components/common/StoreStatusBadge';
 
 export const AdminLayout: React.FC = () => {
-  const { user, isAdmin, logout } = useAuth();
+  const { user, isAdmin, isLoading, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -19,6 +19,19 @@ export const AdminLayout: React.FC = () => {
   useEffect(() => {
     setIsMobileOpen(false);
   }, [location.pathname]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-stone-100 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-700 text-white flex items-center justify-center text-2xl animate-pulse shadow-md">
+            🌿
+          </div>
+          <p className="text-xs font-bold text-stone-600">Verifying Admin Session...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!user || !isAdmin) {
     return (
@@ -31,8 +44,8 @@ export const AdminLayout: React.FC = () => {
           You need store administrator permissions to view this portal. Please log in with an admin account.
         </p>
         <Link
-          to="/login"
-          className="inline-block px-5 py-2.5 rounded-xl bg-emerald-700 text-white font-bold text-xs shadow-md"
+          to="/login?redirect=/admin"
+          className="inline-block px-5 py-2.5 rounded-xl bg-emerald-700 text-white font-bold text-xs shadow-md hover:bg-emerald-800 transition-colors"
         >
           Sign In as Admin
         </Link>
@@ -220,9 +233,9 @@ export const AdminLayout: React.FC = () => {
             <div className="h-4 w-px bg-stone-200" />
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-full bg-emerald-700 text-white font-bold flex items-center justify-center text-xs">
-                {user.name.charAt(0).toUpperCase()}
+                {user?.name ? user.name.charAt(0).toUpperCase() : 'A'}
               </div>
-              <span className="text-xs font-bold text-stone-700">{user.name}</span>
+              <span className="text-xs font-bold text-stone-700">{user?.name || 'Store Administrator'}</span>
             </div>
           </div>
         </header>

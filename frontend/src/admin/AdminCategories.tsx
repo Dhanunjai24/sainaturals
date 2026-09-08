@@ -21,9 +21,10 @@ export const AdminCategories: React.FC = () => {
   const loadCategories = async () => {
     try {
       const res = await api.getCategories();
-      setCategories(res.categories);
+      setCategories(Array.isArray(res?.categories) ? res.categories : []);
     } catch (err) {
       console.error('Failed to load categories:', err);
+      setCategories([]);
     }
   };
 
